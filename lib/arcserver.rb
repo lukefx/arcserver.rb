@@ -12,6 +12,8 @@ require 'arcserver/version'
 require 'arcserver/url_helper'
 require 'arcserver/Identifiable'
 require 'arcserver/Queryable'
+require 'arcserver/util/params_formatter'
+require 'arcserver/util/params_parser'
 require 'arcserver/map_server'
 require 'arcserver/geometry_service'
 require 'arcserver/feature_server'
@@ -25,6 +27,9 @@ require 'arcserver/rest/feature_server'
 require 'arcserver/rest/query'
 require 'arcserver/rest/identify'
 require 'arcserver/rest/gp_server'
+
+module ArcServer
+end
 
 # monkeypath OpenStruct
 class OpenStruct

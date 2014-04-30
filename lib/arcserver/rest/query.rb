@@ -8,8 +8,10 @@ module ArcServer
       format :json
       # debug_output $stdout
 
+      attr_accessor :params
+
 			def initialize(attr={})
-        defaults = {
+        @params = {
             where: "",
             objectIds: "",
             time: "",
@@ -33,18 +35,7 @@ module ArcServer
             returnM: false,
             f: "json"
           }.merge(attr)
-        defaults.each { |k,v| instance_variable_set("@#{k}", v) }
 			end
-
-      def params
-        # sanitize_params
-        hash = Hash[instance_variables.map { |name| [name.to_s[1..-1].to_sym, instance_variable_get(name)] } ]
-        if hash[:geometry]
-          hash[:geometryType] = hash[:geometry].geometryType
-          hash[:geometry] = hash[:geometry].to_json
-        end
-        hash
-      end
 
       # Utility method that sanitize che query parameters
       # example:
@@ -59,7 +50,7 @@ module ArcServer
       # http://sampleserver1.arcgisonline.com/ArcGIS/rest/services/Specialty/ESRI_StateCityHighway_USA/MapServer/0
       #
       def execute(url)
-        response = self.class.get("#{url}/query", query: params)
+        response = self.class.get("#{url}/query", query: Util::ParamsFormatter.build(params))
         Graphics::FeatureSet.new(response.with_indifferent_access)
       end
 
