@@ -6,7 +6,7 @@ require 'forwardable'
 require 'rufus-scheduler'
 require 'active_support'
 require 'active_support/core_ext/hash/indifferent_access'
-require 'active_support/core_ext/object/to_json'
+require 'active_support/core_ext/object/json'
 
 require 'arcserver/version'
 require 'arcserver/url_helper'
