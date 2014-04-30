@@ -14,10 +14,6 @@ module ArcServer
         Feature.new({ geometry: ArcServer::Geometry::Geometry.create(parsed['geometry']), attributes: parsed['attributes'] })
       end
 
-      # def [](key)
-      #   send key
-      # end
-
-	  end
+    end
 	end
 end

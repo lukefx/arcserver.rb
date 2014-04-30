@@ -4,8 +4,9 @@ require 'ostruct'
 require 'httparty'
 require 'forwardable'
 require 'rufus-scheduler'
-require 'active_support/all'
-# require 'active_support/core_ext/hash/indifferent_access'
+require 'active_support'
+require 'active_support/core_ext/hash/indifferent_access'
+require 'active_support/core_ext/object/json'
 
 require 'arcserver/version'
 require 'arcserver/url_helper'
@@ -32,7 +33,22 @@ end
 
 # monkeypath OpenStruct
 class OpenStruct
+
+  def initialize( hash=nil )
+    @table = {}
+    @hash_table = {}
+
+    if hash
+      hash.each do |k, v|
+        @table[k.to_sym] = (v.is_a?(Hash) ? OpenStruct.new(v) : v)
+        @hash_table[k.to_sym] = v
+        new_ostruct_member(k)
+      end
+    end
+  end
+
   def as_json(options = nil)
     table.as_json(options)
   end
+
 end
